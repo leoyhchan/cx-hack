@@ -78,13 +78,6 @@ def cross_entropoy_loss_vectorized(W, X, y, reg):
     # Initialize the loss and gradient to zero.
     loss = 0.0
     dW = np.zeros_like(W)
-
-    ############################################################################
-    # TODO: Compute the cross-entropy loss and its gradient without explicit   #
-    # loops. Store the loss in loss and the gradient in dW. If you are not     #
-    # careful here, it is easy to run into numeric instability. Don't forget   #
-    # the regularization!                                                      #
-    ############################################################################
     
     D, C = W.shape
     N, D = X.shape
@@ -102,10 +95,6 @@ def cross_entropoy_loss_vectorized(W, X, y, reg):
     dscores /= N
     
     dW = (X.T).dot(dscores) + reg * W
-    
-    ############################################################################
-    #                          END OF YOUR CODE                                #
-    ############################################################################
 
     return loss, dW
 
@@ -128,21 +117,6 @@ def softmax_hyperparameter_tuning(X_train, y_train, X_val, y_val):
     all_classifiers = []
     learning_rates = np.arange(1e-8, 9e-8, 5e-9)
     regularization_strengths = np.arange(1e4,9e4,5e3)
-
-    ############################################################################
-    # TODO:                                                                    #
-    # Write code that chooses the best hyperparameters by tuning on the        #
-    # validation set. For each combination of hyperparameters, train a         #
-    # classifier on the training set, compute its accuracy on the training and #
-    # validation sets, and  store these numbers in the results dictionary.     #
-    # In addition, store the best validation accuracy in best_val and the      #
-    # Softmax object that achieves this accuracy in best_softmax.              #
-    #                                                                          #
-    # Hint: You should use a small value for num_iters as you develop your     #
-    # validation code so that the classifiers don't take much time to train;   # 
-    # once you are confident that your validation code works, you should rerun #
-    # the validation code with a larger value for num_iters.                   #
-    ############################################################################
     
     for learning_rate in learning_rates:
         for reg in regularization_strengths:
@@ -160,10 +134,6 @@ def softmax_hyperparameter_tuning(X_train, y_train, X_val, y_val):
             if validation_accuracy > best_val:
                 best_val = validation_accuracy
                 best_softmax = softmax            
-    
-    ############################################################################
-    #                              END OF YOUR CODE                            #
-    ############################################################################
         
     # Print out results.
     for (lr, reg) in sorted(results):
